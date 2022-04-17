@@ -35,5 +35,17 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
+    editForm.addEventListener("submit", (event) => {
+        event.preventDefault()
+        let dataObj = {
+            name: event.target["name"].value,
+            breed: event.target["breed"].value,
+            sex: event.target["sex"].value
+        }
+        console.log(dataObj)
+
+        editForm.reset()
+    })
+
     getDogs()
 })
