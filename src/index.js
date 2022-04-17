@@ -28,7 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function editDogData(id) {
         fetch(`http://localhost:3000/dogs/${id}`)
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+            editForm["name"].value = data.name
+            editForm["breed"].value = data.breed
+            editForm["sex"].value = data.sex
+        })
     }
 
     getDogs()
