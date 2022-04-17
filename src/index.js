@@ -3,13 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const editForm = document.getElementById("dog-form")
 
 
-    fetch("http://localhost:3000/dogs")
-    .then(response => response.json())
-    .then(data => {
-        data.forEach(element => {
-            createDom(element)
-        });
-    })
+    function getDogs() {
+        fetch("http://localhost:3000/dogs")
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(element => {
+                createDom(element)
+            });
+        })
+    }
+    getDogs()
     
     function createDom(data) {
         let row = document.createElement("tr")
@@ -54,16 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify(dataObj)
         })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+            dogTable.innerHTML = ''
+            console.log(data)
+            getDogs()
+        })
 
         editForm.reset()
         
-        fetch("http://localhost:3000/dogs")
-        .then(response => response.json())
-        .then(data => {
-            data.forEach(element => {
-                createDom(element)
-            });
-        })
     })
 })
