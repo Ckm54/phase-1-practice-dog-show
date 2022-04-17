@@ -20,8 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <td><button>Edit</button></td>    
         `
         row.innerHTML = rowData
-        row.querySelector("button").addEventListener("click", () => console.log("click"))
+        row.querySelector("button").addEventListener("click", () => editDogData())
         dogTable.append(row)
+    }
+    
+    function editDogData() {
+        console.log("editing...")
     }
 
     getDogs()
