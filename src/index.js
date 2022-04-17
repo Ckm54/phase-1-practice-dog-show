@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const dogTable = document.getElementById("table-body")
+    const editForm = document.getElementById("dog-form")
 
     function getDogs() {
         fetch("http://localhost:3000/dogs")
@@ -17,15 +18,17 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${data.name}</td>
             <td>${data.breed}</td>
             <td>${data.sex}</td>
-            <td><button>Edit</button></td>    
+            <td><button id=${data.id}>Edit</button></td>    
         `
         row.innerHTML = rowData
-        row.querySelector("button").addEventListener("click", () => editDogData())
+        row.querySelector("button").addEventListener("click", (e) => editDogData(e.target.id))
         dogTable.append(row)
     }
     
-    function editDogData() {
-        console.log("editing...")
+    function editDogData(id) {
+        fetch(`http://localhost:3000/dogs/${id}`)
+        .then(response => response.json())
+        .then(data => console.log(data))
     }
 
     getDogs()
