@@ -2,15 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const dogTable = document.getElementById("table-body")
     const editForm = document.getElementById("dog-form")
 
-    function getDogs() {
-        fetch("http://localhost:3000/dogs")
-        .then(response => response.json())
-        .then(data => {
-            data.forEach(element => {
-                createDom(element)
-            });
-        })
-    }
+
+    fetch("http://localhost:3000/dogs")
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(element => {
+            createDom(element)
+        });
+    })
     
     function createDom(data) {
         let row = document.createElement("tr")
@@ -39,16 +38,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     editForm.addEventListener("submit", (event) => {
         event.preventDefault()
-        console.log(editForm.id)
+        let itemId = parseInt(editForm.id)
 
         let dataObj = {
             name: event.target["name"].value,
             breed: event.target["breed"].value,
             sex: event.target["sex"].value
         }
-        console.log(dataObj)
+
+        fetch(`http://localhost:3000/dogs/${itemId}`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dataObj)
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+
+        editForm.reset()
+        
+        fetch("http://localhost:3000/dogs")
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(element => {
+                createDom(element)
+            });
+        })
     })
-
-
-    getDogs()
 })
